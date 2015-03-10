@@ -13,7 +13,7 @@ def print_menu(instruments):
     print('{} midi-js-soundfonts were found.'.format(len(instruments)))
     print('\n'.join('{:>3} {}'.format(i, x) for i, x in enumerate(instruments)))
 
-def get_mp3_from_url(filepath='acoustic_guitar_steel-mp3/A1.mp3'):
+def get_mp3_from_filepath(filepath='acoustic_guitar_steel-mp3/A1.mp3'):
     fmt = '{}/{}?raw=true'
     url = fmt.format(base_url.replace('/tree/', '/blob/'), filepath)
     with open(filepath, 'wb') as out_file:
@@ -35,7 +35,7 @@ def get_instrument_mp3s(instrument='acoustic_guitar_steel'):
     for i, filename in enumerate(filenames):
         filepath = instrument + '/' + filename
         print('Downloading file {:>2} of {}, {}...'.format(i+1, len(filenames), filepath))
-        get_mp3_from_url(filepath)
+        get_mp3_from_filepath(filepath)
 
 def main():
     instruments = get_instruments(base_url)
