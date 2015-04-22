@@ -10,24 +10,15 @@ if platform.system() == 'Darwin':
 else:
     print('Please upgrade to a real computer and then press any key to continue...')
 
-fmt = '{:<32} = {}'
-print(fmt.format('-' * 32, '...'))
-print(fmt.format('platform.architecture()',          platform.architecture()))
-print(fmt.format('platform.machine()',               platform.machine()))
-print(fmt.format('platform.node()',                  platform.node()))
-print(fmt.format('platform.platform()',              platform.platform()))
-print(fmt.format('platform.processor()',             platform.processor()))
-print(fmt.format('platform.python_build()',          platform.python_build()))
-print(fmt.format('platform.python_compiler()',       platform.python_compiler()))
-print(fmt.format('platform.python_branch()',         platform.python_branch()))
-print(fmt.format('platform.python_implementation()', platform.python_implementation()))
-print(fmt.format('platform.python_revision()',       platform.python_revision()))
-print(fmt.format('platform.python_version()',        platform.python_version()))
-print(fmt.format('platform.python_version_tuple()',  platform.python_version_tuple()))
-print(fmt.format('platform.release()',               platform.release()))
-print(fmt.format('platform.system()',                platform.system()))
-print(fmt.format('platform.version()',               platform.version()))
-print(fmt.format('platform.uname()',                 platform.uname()))
+print('-' * 32 + ' = ...')
+fmt = '{}.{:<23} = {}'
+for func in (platform.architecture,    platform.machine,        platform.node,
+             platform.platform,        platform.processor,      platform.python_build,
+             platform.python_compiler, platform.python_branch,  platform.python_implementation,
+             platform.python_revision, platform.python_version, platform.python_version_tuple,
+             platform.release,         platform.system,         platform.version,
+             platform.uname):
+    print(fmt.format(func.__module__, func.__name__ + '()', func()))
 
 print('-' * 32)
 s, r, v = platform.system(), platform.release(), platform.version()
