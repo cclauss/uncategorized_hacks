@@ -7,15 +7,10 @@ import array, os, struct
 my_matrix_2d = [(x, x * 10) for x in xrange(10)]
 
 def flatten(in_list):
-    return [item for sublist in in_list for item in sublist]
+    return [item for sub_list in in_list for item in sub_list]
 
 def list_of_pairs(in_list):
-    out_list = []
-    while in_list:
-        x, y = in_list[:2]
-        in_list = in_list[2:]
-        out_list.append([x, y])
-    return out_list
+    return zip(in_list[::2], in_list[1::2])
 
 # === do it with the array module
 def write_floats_via_array(floats, filename='matrix_via_array.txt'):
