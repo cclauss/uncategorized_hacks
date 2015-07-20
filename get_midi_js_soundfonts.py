@@ -52,7 +52,7 @@ def main():
     try:
         get_instrument_mp3s(instruments[i])
     except IndexError:
-        sys.exit('User Error: {} is not a valid option!'.format(i))
+        exit('User Error: {} is not a valid option!'.format(i))
 
 if __name__ == '__main__':
     main()
