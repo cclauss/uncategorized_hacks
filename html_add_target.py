@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-'''
+"""
 See: http://omz-forums.appspot.com/editorial/post/5888470794895360
 
 FluidR3_GM.html - Should be a local copy of the original webpage source with
   'target="_blank"' added to all <a href> tags that do not already have a target.
-'''
+"""
 
 import bs4, requests
 

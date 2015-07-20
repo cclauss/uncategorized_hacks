@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import platform, sys
+import platform
 
 if platform.system() == 'Darwin':
     if platform.machine().startswith('iP'):
@@ -23,7 +23,7 @@ for func in (platform.architecture,    platform.machine,        platform.node,
 
 print('-' * 32)
 s, r, v = platform.system(), platform.release(), platform.version()
-print(platform.system_alias(s, r, v)) # system, release, version))
+print(platform.system_alias(s, r, v))  # system, release, version))
 print(s)
 print(r)
 print(v)
