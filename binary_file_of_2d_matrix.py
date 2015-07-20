@@ -35,14 +35,14 @@ write_2d_matrix_via_array(my_matrix_2d)
 print(read_2d_matrix_via_array())
 
 # === do it with the struct module
+def write_floats_via_struct(floats, filename='matrix_via_struct.txt'):
+    with open(filename, 'wb') as out_file:
+        out_file.write(struct.pack('f' * len(floats), *floats))
+
 def read_floats_via_struct(filename='matrix_via_struct.txt'):
     with open(filename, 'rb') as in_file:
         data = in_file.read()
     return struct.unpack_from(len(data) / struct.calcsize('f') * 'f', data)
-
-def write_floats_via_struct(floats, filename='matrix_via_struct.txt'):
-    with open(filename, 'wb') as out_file:
-        out_file.write(struct.pack('f' * len(floats), *floats))
 
 def write_2d_matrix_via_struct(matrix_2d, filename='matrix_via_struct.txt'):
     write_floats_via_struct(flatten(matrix_2d), filename)
