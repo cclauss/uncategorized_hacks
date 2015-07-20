@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+# coding: utf-8
 '''
 See: http://omz-forums.appspot.com/pythonista/post/5786871732895744
 '''
