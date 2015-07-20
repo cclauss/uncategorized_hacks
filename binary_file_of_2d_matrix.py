@@ -24,8 +24,11 @@ def write_2d_matrix_via_array(matrix_2d, filename='matrix_via_array.txt'):
     
 def read_2d_matrix_via_array(filename='matrix_via_array.txt'):
     b = array.array('f')
-    with open(filename, 'rb') as in_file:
-        b.fromfile(in_file, 20)  # problem!  had to hardcode number of values to read!
+    try:
+        with open(filename, 'rb') as in_file:
+            b.fromfile(in_file, 999)
+    except EOFError:
+        pass
     return list_of_pairs(b.tolist())
     
 print('=' * 20)
