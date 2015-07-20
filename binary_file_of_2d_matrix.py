@@ -2,7 +2,7 @@
 
 # See http://omz-forums.appspot.com/pythonista/post/6389848566923264
 
-import array, struct
+import array, os, struct
 
 my_matrix_2d = [(x, x*10) for x in xrange(10)]
 
@@ -23,12 +23,10 @@ def write_2d_matrix_via_array(matrix_2d, filename='matrix_via_array.txt'):
         a.tofile(out_file)
     
 def read_2d_matrix_via_array(filename='matrix_via_array.txt'):
+    floats_in_the_file = os.path.getsize(filename) / struct.calcsize('f')
     b = array.array('f')
-    try:
-        with open(filename, 'rb') as in_file:
-            b.fromfile(in_file, 999)
-    except EOFError:
-        pass
+    with open(filename, 'rb') as in_file:
+        b.fromfile(in_file, floats_in_the_file)
     return list_of_pairs(b.tolist())
     
 print('=' * 20)
@@ -37,14 +35,12 @@ print(read_2d_matrix_via_array())
 
 # === do it with the struct module
 def read_2d_matrix_via_struct(filename='matrix_via_struct.txt'):
-    struc_float_size = struct.calcsize('f')
-    the_list = []
     with open(filename, 'rb') as in_file:
         data = in_file.read()
-    for i in xrange(len(data) / struc_float_size):
-        the_list.append(struct.unpack_from('f', data, i * struc_float_size)[0])
-    return list_of_pairs(the_list)
-    
+        fmt = len(data) / struct.calcsize('f') * 'f'
+        return list_of_pairs(struct.unpack_from(fmt, data))
+    return []
+
 def write_2d_matrix_via_struct(matrix_2d, filename='matrix_via_struct.txt'):
     with open(filename, 'wb') as out_file:
         for x, y in matrix_2d:
