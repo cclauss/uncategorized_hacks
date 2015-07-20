@@ -4,7 +4,7 @@
 
 import array, os, struct
 
-my_matrix_2d = [(x, x*10) for x in xrange(10)]
+my_matrix_2d = [(x, x * 10) for x in xrange(10)]
 
 def list_of_pairs(in_list):
     out_list = []
@@ -18,7 +18,7 @@ def list_of_pairs(in_list):
 def write_2d_matrix_via_array(matrix_2d, filename='matrix_via_array.txt'):
     def flatten(in_list):
         return [item for sublist in in_list for item in sublist]
-    a = array.array('f', flatten(my_matrix_2d))
+    a = array.array('f', flatten(matrix_2d))
     with open(filename, 'wb') as out_file:
         a.tofile(out_file)
     
@@ -37,9 +37,8 @@ print(read_2d_matrix_via_array())
 def read_2d_matrix_via_struct(filename='matrix_via_struct.txt'):
     with open(filename, 'rb') as in_file:
         data = in_file.read()
-        fmt = len(data) / struct.calcsize('f') * 'f'
-        return list_of_pairs(struct.unpack_from(fmt, data))
-    return []
+    fmt = len(data) / struct.calcsize('f') * 'f'
+    return list_of_pairs(struct.unpack_from(fmt, data))
 
 def write_2d_matrix_via_struct(matrix_2d, filename='matrix_via_struct.txt'):
     with open(filename, 'wb') as out_file:
