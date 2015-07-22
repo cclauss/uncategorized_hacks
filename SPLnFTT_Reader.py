@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# See http://omz-forums.appspot.com/pythonista/post/6389848566923264
+# See: https://www.facebook.com/SPLnFFT  Paid app plus in-app purchase to upload .bin to Dropbox
+# and: https://omz-forums.appspot.com/pythonista/post/6389848566923264
 
 # 5529600 bytes in the file / 4 bytes per float = 1382400 floats in the file
 
