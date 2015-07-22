@@ -5,7 +5,7 @@
 
 # Now I understand why numpy is all the rage with data scientists!!!
 
-# Four lines of numpy do the while thing!! Import, read, transform, and cleanse.
+# Four lines of numpy do the whole thing!! Import, read, transform, and cleanse.
 # Much faster execution time too.
 
 import numpy
