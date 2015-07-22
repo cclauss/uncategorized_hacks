@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# See: http://omz-forums.appspot.com/pythonista/post/6389848566923264
+
 # Now I understand why numpy is all the rage with data scientists!!!
 
 # Four lines of numpy do the while thing!! Import, read, transform, and cleanse.
