@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# In just over 1 second SPLnFFT_Reader.py reads 1,382,400 floats out of the binary file,
+# converts that into a 2d list of 691,200 fast_slow pairs and cleans that down to
+# a 2d list of 2,786 valid fast_slow pairs and prints out the first 50 of them.
+
 # See: https://www.facebook.com/SPLnFFT  Paid app plus in-app purchase to upload .bin to Dropbox
 # and: https://omz-forums.appspot.com/pythonista/post/6389848566923264
 
