@@ -30,7 +30,7 @@ print('Elapsed time (read_floats()): {}'.format(datetime.datetime.now() - start)
 print('{:>7} floats in the list'.format(len(list_of_floats)))
 fast_slow_list = list_of_pairs(list_of_floats)  # 1D list --> 2D list
 # remove the invalid elements
-fast_slow_list = my_list = [(x[0], x[1]) for x in fast_slow_list if x[0] > 0 and x[1] > 0]
+fast_slow_list = [(x[0], x[1]) for x in fast_slow_list if x[0] > 0 and x[1] > 0]
 print('{:>7} pairs after cleaning'.format(len(fast_slow_list)))
 print('Elapsed time (total): {}'.format(datetime.datetime.now() - start)) 
 print(fast_slow_list[:50])  # print just the first 50 fast_slow pairs
