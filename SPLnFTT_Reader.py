@@ -6,7 +6,7 @@
 
 # 5529600 bytes in the file / 4 bytes per float = 1382400 floats in the file
 
-import datetime, os, struct, itertools
+import datetime, itertools, struct
 
 filename = 'SPLnFFT_2015_07_21.bin'
 
