@@ -12,4 +12,15 @@ import numpy
 data = numpy.fromfile('SPLnFFT_2015_07_21.bin', dtype=numpy.float32).reshape(-1, 2)
 data = data[numpy.all(data > 0, axis=1)]  # cleanse
 print(type(data), len(data))  # numpy.ndarray, 2786
-print(data[:20])  # print first 20 fast, slow pairs
+#print(data[:20])  # print first 20 fast, slow pairs
+
+# HELP: A scatter plot is all wrong for this dataset
+
+import matplotlib.pyplot as plt
+fig = plt.figure()
+ax = fig.add_subplot(1, 1, 1)
+x = data[:,0]
+y = data[:,1]
+ax.scatter(x, y)
+plt.title('SPLnFFT Noise data')
+plt.show()
