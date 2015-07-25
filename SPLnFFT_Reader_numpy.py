@@ -2,47 +2,53 @@
 # coding: utf-8
 
 # See: http://omz-forums.appspot.com/pythonista/post/6389848566923264
+# This code is available at: https://github.com/cclauss/uncategorized_hacks
 
-# Now I understand why numpy is all the rage with data scientists!!!
+# SPLnFFT app makes two sound pressure level readings every 1/8th of a second.
+# It stores the results into a daily binary data file that this script reads.
+#
+# Read 1,382,400 float32 values into a numpy.ndarray.
+# Reshape that ndarray into two columns of 691,200 floats each.
+# 691,200 == 8 readings per sec * 60 secs per min * 60 mins per hour * 24 hours.
+# The columns represent Fast Sound Pressure Level and Slow Sound Pressure Level.
 
-# Three lines of numpy do the whole thing!! Import, read, transform,
-#  and cleanse.  Much faster execution time too.
+# 24 hours of data is too much to view at once so work should be
+# done to allow users to zoom into interesting portions of the day.
 
-import numpy
+import datetime, numpy
 
 filename = 'SPLnFFT_2015_07_21.bin'
-remove_zero_readings = False  # basic data cleansing
 
-def eighths_of_a_second(nbr_of_readings=691200):  # [0 ... 23.9999]
-    readings_per_hour = float(8 * 60 * 60)
-    return numpy.array(list(i/readings_per_hour for i in range(nbr_of_readings)))
-print(eighths_of_a_second()[1])
+def elapsed_time(msg='total'):
+    return 'Elapsed time ({}): {}'.format(msg, datetime.datetime.now() - start)
 
+start = datetime.datetime.now()
 data = numpy.fromfile(filename, dtype=numpy.float32).reshape(-1, 2)
-if remove_zero_readings:
-    data = data[numpy.any(data > 0, axis=1)]  # cleanse
-print(type(data), len(data))  # numpy.ndarray, 2786
+print(elapsed_time('4 Read and reshape'))
+print(type(data), len(data))  # numpy.ndarray, 691200
 #print(data[:20])  # print first 20 fast, slow pairs
-
-
-t = numpy.arange(0.0, len(data))  # the file has 8 reading per second for a full 24 hour day
-# when we cleanse the zero readings out, the timescale makes no sense.  It might be better
-# not to cleanse, but then zoom in on nonzero portions, if absolute time is important
+#print(data[-20:])  # print last 20 fast, slow pairs
+t = numpy.linspace(0.0, 24.0, len(data))
 
 import matplotlib.pyplot as plt
 fig = plt.figure()
 ax = fig.add_subplot(1, 1, 1)
-fast = data[:,1]
-slow = data[:,0]
-ax.plot(t[fast>0], fast[fast>0], marker='.')
-ax.plot(t[slow>0], slow[slow>0])
-t_bad=t[(fast<=0) | (slow <= 0)]
-ax.scatter(t_bad, max(fast.max(), slow.max())+numpy.ones_like(t_bad), marker='o')
-plt.legend(('Fast Lp (g+-)','Slow Lp (ms-)','Negative readings'), loc='lower left')
+fast = data[:,0]
+slow = data[:,1]
+ax.plot(t[fast>0], fast[fast>0], 'g+-')
+ax.plot(t[slow>0], slow[slow>0], 'ms-')
+t_bad = t[(fast <= 0) | (slow <= 0)]
+print(elapsed_time('3 Starting scatter...'))  # approx. 0.5 seconds
+ax.scatter(t_bad, max(fast.max(), slow.max()) + numpy.ones_like(t_bad), marker='o')
+print(elapsed_time('2 Scatter'))  # approx. 22 seconds
+plt.legend(('Fast Lp','Slow Lp','Negative readings'), loc='lower right')
 plt.title('Sound Pressure Level data from ' + filename)
-#plt.xlabel('Seconds since midnight in a 24 hour day')
-plt.xlabel('Number of samples, 8 per second')
-plt.ylabel('Sound Pressure Level in dB(A)')
-#plt.xticks(slow, eighths_of_a_second(len(data)))
-plt.xticks(fast, numpy.arange(0,24))
+plt.xlabel('Eight samples per second across a 24 hour day')
+plt.ylabel('Sound Pressure Level (Lp) in dB(A)')
+# x axis currently starts at -5 and ends at 30 with ticks every 5 hours.
+# we would like it to starts at 0 and ends at 24 with a tick every hour.
+#plt.xticks(fast, xrange(24))  # crashes!
+#plt.xticks(fast, numpy.arange(0,24))  # crashes!
+print(elapsed_time('1 Adornments'))
 plt.show()
+print(elapsed_time('0 plt.show() Done.'))  # approx. 2 minutes 20 seconds
