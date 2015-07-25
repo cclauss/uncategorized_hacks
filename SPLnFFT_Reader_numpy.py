@@ -33,6 +33,7 @@ t = numpy.linspace(0.0, 24.0, len(data))
 import matplotlib.pyplot as plt
 fig = plt.figure()
 ax = fig.add_subplot(1, 1, 1)
+fig.subplots_adjust(left=0.09, bottom=0.1, right=0.97, top=0.93)
 fast = data[:,0]
 slow = data[:,1]
 ax.plot(t[fast>0], fast[fast>0], 'g+-')
