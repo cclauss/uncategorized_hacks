@@ -26,5 +26,5 @@ print(elapsed_time('Read'))
 floats_per_file = len(data) / 24
 print('{} floats per file'.format(floats_per_file))
 for i in xrange(24):
-    data[i*floats_per_file:(i+1)*floats_per_file].tofile(fmt.format(i))
+    data[i*floats_per_file:(i+1)*floats_per_file - 1].tofile(fmt.format(i))
 print(elapsed_time('{} files written.  Done.'.format(i+1)))  # approx. 0.333 seconds
