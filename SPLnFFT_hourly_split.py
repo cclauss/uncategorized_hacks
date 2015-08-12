@@ -23,8 +23,8 @@ def elapsed_time(msg='total'):
 start = datetime.datetime.now()
 data = numpy.fromfile(filename, dtype=numpy.float32)
 print(elapsed_time('Read'))
-bytes_per_file = len(data) / 24
-print('{} bytes per file'.format(bytes_per_file))
+floats_per_file = len(data) / 24
+print('{} floats per file'.format(floats_per_file))
 for i in xrange(24):
-    data[i*bytes_per_file:(i+1)*bytes_per_file].tofile(fmt.format(i))
-print(elapsed_time('24 files written.  Done.'))  # approx. 0.3 seconds
+    data[i*floats_per_file:(i+1)*floats_per_file].tofile(fmt.format(i))
+print(elapsed_time('{} files written.  Done.'.format(i+1)))  # approx. 0.333 seconds
