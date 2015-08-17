@@ -42,7 +42,7 @@ t_bad = t[(fast <= 0) | (slow <= 0)]
 print(elapsed_time('3 Starting scatter...'))  # approx. 0.5 seconds
 ax.scatter(t_bad, max(fast.max(), slow.max()) + numpy.ones_like(t_bad), marker='o')
 print(elapsed_time('2 Scatter'))  # approx. 22 seconds
-plt.legend(('Fast Lp','Slow Lp','Negative readings'), loc='lower right')
+plt.legend(('Fast Lp','Slow Lp','Readings <= 0'), loc='lower right')
 plt.title('Sound Pressure Level data from ' + filename)
 plt.xlabel('Eight samples per second across a 24 hour day')
 plt.ylabel('Sound Pressure Level (Lp) in dB(A)')
