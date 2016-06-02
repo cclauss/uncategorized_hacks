@@ -15,8 +15,7 @@ losers = []
 for pkg_name, downloads in client.top_packages(200):
     release = client.package_releases(pkg_name)[0]
     release_data = client.release_data(pkg_name, release)
-    py3 = bool([x for x in release_data['classifiers']
-                if x.startswith(py3_classifier)])
+    py3 = py3_classifier in '\n'.join(release_data['classifiers'])
     s = fmt.format(pkg_name, release, py3)
     print(s)
     if not py3:
