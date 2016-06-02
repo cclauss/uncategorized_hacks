@@ -1,4 +1,3 @@
-cat ./top200.py
 #!/usr/bin/env python
 
 import xmlrpclib
