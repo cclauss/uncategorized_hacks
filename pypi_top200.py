@@ -13,7 +13,11 @@ def header():
 print(header())
 losers = []
 for pkg_name, downloads in client.top_packages(200):
-    release = client.package_releases(pkg_name)[0]
+    try:
+        release = client.package_releases(pkg_name)[0]
+    except IndexError:  # marionette-transport and similar
+        print(pkg_name)
+        continue
     release_data = client.release_data(pkg_name, release)
     py3 = py3_classifier in '\n'.join(release_data['classifiers'])
     s = fmt.format(pkg_name, release, py3)
