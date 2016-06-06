@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-MAX_PACKAGES = 200
+MAX_PACKAGES = 1000
 USE_ASYNCIO = True
 
 import asyncio
@@ -12,13 +12,14 @@ except ImportError:
     from xmlrpclib import ServerProxy
 
 pkg_info = collections.namedtuple('pkg_info', 'pkg_name downloads version py3')
-fmt = '{:30}{:13}{}'
+fmt = '{pkg_name:30}{version:13}{py3}'
 py3_classifier = 'Programming Language :: Python :: 3'
 
 client = ServerProxy('https://pypi.python.org/pypi')
 
 
 def header():
+    fmt = '{:30}{:13}{}'
     return '\n'.join((fmt.format('Module name', 'Latest', 'Python 3?'),
                       fmt.format('=' * 11, '=' * 6, '=' * 9)))
 
@@ -30,7 +31,7 @@ def get_pkg_info(pkg_name, downloads=0):
         release = local_client.package_releases(pkg_name)[0]
     except IndexError:  # marionette-transport and similar
         print(pkg_name)
-        return None
+        return pkg_info(pkg_name, downloads, 'PyPI error!!', False)
     release_data = local_client.release_data(pkg_name, release)
     py3 = py3_classifier in '\n'.join(release_data['classifiers'])
     return pkg_info(pkg_name, downloads, release, py3)
@@ -61,16 +62,16 @@ if USE_ASYNCIO:
     packages_info = loop.run_until_complete(async_main())
 else:
     packages_info = sync_main()
-print(time.time() - start)  # ~ 32 seconds if USE_ASYNCIO else ~ 112 seconds
+print(time.time() - start, 'seconds')  # ~ 32 if USE_ASYNCIO else ~ 112
 
 print(header())
 for package_info in packages_info:
-    print(fmt.format(package_info.pkg_name, package_info.version, package_info.py3))
+    print(fmt.format(**package_info._asdict()))
 
 losers = [pkg for pkg in packages_info if not pkg.py3]
 print('\n{} Python 2 ONLY packages:'.format(len(losers)))
 if losers:
     print(header())
-    print('\n'.join(fmt.format(pkg.pkg_name, pkg.version, pkg.py3) for pkg in losers))
+    print('\n'.join(fmt.format(**pkg._asdict()) for pkg in losers))
 
-print(time.time() - start)
+print(time.time() - start, 'seconds')
