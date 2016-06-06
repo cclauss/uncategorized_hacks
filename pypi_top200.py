@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-MAX_PACKAGES = 1000
+MAX_PACKAGES = 200  # or try 1000
 USE_ASYNCIO = True
 
 import asyncio
@@ -29,8 +29,8 @@ def get_pkg_info(pkg_name, downloads=0):
     local_client = ServerProxy('https://pypi.python.org/pypi') if USE_ASYNCIO else client
     try:
         release = local_client.package_releases(pkg_name)[0]
-    except IndexError:  # marionette-transport and similar
-        print(pkg_name)
+    except IndexError:  # marionette-transport, ll-orasql, and similar
+        print(pkg_name, 'has no releases in PyPI!!')
         return pkg_info(pkg_name, downloads, 'PyPI error!!', False)
     release_data = local_client.release_data(pkg_name, release)
     py3 = py3_classifier in '\n'.join(release_data['classifiers'])
